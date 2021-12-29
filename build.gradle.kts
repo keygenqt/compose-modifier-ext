@@ -6,10 +6,10 @@ plugins {
     id("com.diffplug.spotless")
 }
 
-version = "0.0.11"
-group = "com.keygenqt.modifier"
+val composeVersion: String = findProperty("composeVersion") as? String ?: "1.1.0-rc01"
 
-val compose = "1.0.5"
+version = "0.0.12"
+group = "com.keygenqt.modifier"
 
 spotless {
     kotlin {
@@ -55,6 +55,6 @@ android {
 }
 
 dependencies {
-    implementation("androidx.compose.ui:ui:$compose")
-    implementation("androidx.compose.material:material:$compose")
+    implementation("androidx.compose.ui:ui:$composeVersion")
+    implementation("androidx.compose.material:material:$composeVersion")
 }
