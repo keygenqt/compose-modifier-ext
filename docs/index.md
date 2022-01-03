@@ -17,7 +17,7 @@ dependencies {
 }
 ```
 
-## Features:
+## Features
 
 * [Item List Collapse](/compose-modifier-ext/item_collapse)
 * [Clickable](/compose-modifier-ext/clickable)
