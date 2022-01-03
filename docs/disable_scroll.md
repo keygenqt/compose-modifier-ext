@@ -1,4 +1,4 @@
-Disable vertical scroll. Work with HorizontalPager
+Disable vertical scroll. Work with [HorizontalPager](https://google.github.io/accompanist/pager/)
 
 ### disableVerticalScroll
 
@@ -24,3 +24,20 @@ fun Modifier.disableHorizontalScroll() =
     })
 ```
 
+### Usage
+
+```kotlin
+HorizontalPager(
+    modifier = Modifier.disableHorizontalScroll(),
+    state = pages.state,
+    count = pages.count
+) { page ->
+    when (page) {
+        pages.step1 -> OnboardingStep1()
+        pages.step2 -> OnboardingStep2()
+        pages.step3 -> OnboardingStep3()
+        pages.step4 -> OnboardingStep4()
+        pages.step5 -> OnboardingStep5()
+    }
+}
+```
