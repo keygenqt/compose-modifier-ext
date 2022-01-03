@@ -33,15 +33,6 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 
 /**
- * Controlling element visibility based on transparency
- *
- * @property [visibility] visible/invisible
- */
-fun Modifier.visible(visibility: Boolean) = then(
-    alpha(if (visibility) 1f else 0f)
-)
-
-/**
  * Collapse list item animation
  */
 fun Modifier.graphicsCollapse(

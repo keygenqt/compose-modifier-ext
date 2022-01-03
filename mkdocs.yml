@@ -7,14 +7,10 @@ repo_url: 'https://github.com/keygenqt/compose-modifier-ext'
 # Navigation
 nav:
   - 'Overview': index.md
-  - 'visible': visible.md
-  - 'graphicsCollapse': graphicsCollapse.md
-  - 'noRippleClickable': noRippleClickable.md
-  - 'interceptionClickable': interceptionClickable.md
-  - 'disableVerticalScroll': disableVerticalScroll.md
-  - 'disableHorizontalScroll': disableHorizontalScroll.md
-  - 'ifFalse': ifFalse.md
-  - 'ifTrue': ifTrue.md
+  - 'Item List Collapse': item_collapse.md
+  - 'Clickable': clickable.md
+  - 'Disable scroll': disable_scroll.md
+  - 'Boolean modification': boolean.md
 
 # Configuration
 theme:

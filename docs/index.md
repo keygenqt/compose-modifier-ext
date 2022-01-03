@@ -19,14 +19,10 @@ dependencies {
 
 ## Features:
 
-* [Controlling element visibility based on transparency](/visible)
-* Collapse list item animation
-* No ripple clickable
-* Interception of a click
-* Disable vertical scroll
-* Disable horizontal scroll
-* ifFalse
-* ifTrue
+* [Item List Collapse](/compose-modifier-ext/item_collapse)
+* [Clickable](/compose-modifier-ext/clickable)
+* [Disable scroll](/compose-modifier-ext/disable_scroll)
+* [Boolean modification](/compose-modifier-ext/boolean)
 
 ## License
 
