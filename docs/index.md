@@ -19,7 +19,7 @@ dependencies {
 
 ## Features:
 
-* Controlling element visibility based on transparency
+* [Controlling element visibility based on transparency](/visible)
 * Collapse list item animation
 * No ripple clickable
 * Interception of a click
