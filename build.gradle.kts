@@ -8,7 +8,7 @@ plugins {
 
 val composeVersion: String = findProperty("composeVersion") as? String ?: "1.1.0-rc01"
 
-version = "0.0.12"
+version = "0.0.13"
 group = "com.keygenqt.modifier"
 
 spotless {
@@ -51,6 +51,14 @@ android {
         minSdk = 23
         targetSdk = 31
         setProperty("archivesBaseName", "modifier-ext-$version")
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = composeVersion
+    }
+
+    buildFeatures {
+        compose = true
     }
 }
 

@@ -16,256 +16,95 @@
 
 package com.keygenqt.modifier
 
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 
 /**
  * Controlling element visibility based on transparency
  *
  * @property [visibility] visible/invisible
- *
- * @since 0.0.1
- * @author Vitaliy Zarubin
  */
-fun Modifier.visible(visibility: Boolean): Modifier = this.then(alpha(if (visibility) 1f else 0f))
-
-/**
- * Modifier padding configuration size
- *
- * @since 0.0.7
- * @author Vitaliy Zarubin
- */
-fun Modifier.spacePage() = padding(
-    top = SpaceSize.spacePageVertical,
-    bottom = SpaceSize.spacePageVertical,
-    start = SpaceSize.spacePageHorizontal,
-    end = SpaceSize.spacePageHorizontal,
+fun Modifier.visible(visibility: Boolean) = then(
+    alpha(if (visibility) 1f else 0f)
 )
 
 /**
- * Modifier size configuration size
- *
- * @since 0.0.7
- * @author Vitaliy Zarubin
+ * Collapse list item animation
  */
-fun Modifier.spacePageSize() = size(
-    height = SpaceSize.spacePageVertical,
-    width = SpaceSize.spacePageHorizontal,
-)
+fun Modifier.graphicsCollapse(
+    state: LazyListState
+) = this.composed {
+    var scrolledY by remember { mutableStateOf(0f) }
+    var previousOffset by remember { mutableStateOf(0) }
+    graphicsLayer {
+        scrolledY += state.firstVisibleItemScrollOffset - previousOffset
+        translationY = scrolledY * 0.5f
+        previousOffset = state.firstVisibleItemScrollOffset
+    }
+}
 
 /**
- * Modifier padding configuration size
- *
- * @since 0.0.7
- * @author Vitaliy Zarubin
+ * No ripple clickable
  */
-fun Modifier.spacePageVertical() = padding(
-    top = SpaceSize.spacePageVertical,
-    bottom = SpaceSize.spacePageVertical,
-)
+inline fun Modifier.noRippleClickable(crossinline onClick: () -> Unit) = composed {
+    val interactionSource by remember { mutableStateOf(MutableInteractionSource()) }
+    clickable(
+        indication = null,
+        interactionSource = interactionSource
+    ) {
+        onClick()
+    }
+}
 
 /**
- * Modifier padding configuration size
- *
- * @since 0.0.7
- * @author Vitaliy Zarubin
+ * Interception of a click
  */
-fun Modifier.spacePageHorizontal() = padding(
-    start = SpaceSize.spacePageHorizontal,
-    end = SpaceSize.spacePageHorizontal,
-)
+fun Modifier.interceptionClickable(): Modifier = composed {
+    clickable(
+        indication = null,
+        interactionSource = remember { MutableInteractionSource() }
+    ) {}
+}
 
 /**
- * Modifier padding configuration size
- *
- * @since 0.0.7
- * @author Vitaliy Zarubin
+ * Disable vertical scroll
  */
-fun Modifier.spaceItem() = padding(
-    top = SpaceSize.spaceItemVertical,
-    bottom = SpaceSize.spaceItemVertical,
-    start = SpaceSize.spaceItemHorizontal,
-    end = SpaceSize.spaceItemHorizontal,
-)
+fun Modifier.disableVerticalScroll() =
+    this.nestedScroll(object : NestedScrollConnection {
+        override fun onPreScroll(available: Offset, source: NestedScrollSource) =
+            available.copy(x = 0f)
+    })
 
 /**
- * Modifier size configuration size
- *
- * @since 0.0.7
- * @author Vitaliy Zarubin
+ * Disable horizontal scroll
  */
-fun Modifier.spaceItemSize() = size(
-    height = SpaceSize.spaceItemVertical,
-    width = SpaceSize.spaceItemHorizontal,
-)
+fun Modifier.disableHorizontalScroll() =
+    this.nestedScroll(object : NestedScrollConnection {
+        override fun onPreScroll(available: Offset, source: NestedScrollSource) =
+            available.copy(y = 0f)
+    })
 
 /**
- * Modifier padding configuration size
- *
- * @since 0.0.7
- * @author Vitaliy Zarubin
+ * Modifier check bool is FALSE for set params
  */
-fun Modifier.spaceItemVertical() = padding(
-    top = SpaceSize.spaceItemVertical,
-    bottom = SpaceSize.spaceItemVertical,
-)
+inline fun Modifier.ifFalse(value: Boolean, crossinline block: Modifier.() -> Modifier) =
+    then(if (!value) block.invoke(this) else this)
 
 /**
- * Modifier padding configuration size
- *
- * @since 0.0.7
- * @author Vitaliy Zarubin
+ * Modifier check bool is TRUE for set params
  */
-fun Modifier.spaceItemHorizontal() = padding(
-    start = SpaceSize.spaceItemHorizontal,
-    end = SpaceSize.spaceItemHorizontal,
-)
-
-/**
- * Modifier padding configuration size
- *
- * @since 0.0.7
- * @author Vitaliy Zarubin
- */
-fun Modifier.spaceList() = padding(
-    all = SpaceSize.spaceList
-)
-
-/**
- * Modifier size configuration size
- *
- * @since 0.0.7
- * @author Vitaliy Zarubin
- */
-fun Modifier.spaceListSize() = size(
-    height = SpaceSize.spaceList,
-    width = SpaceSize.spaceList,
-)
-
-/**
- * Modifier padding configuration size
- *
- * @since 0.0.7
- * @author Vitaliy Zarubin
- */
-fun Modifier.spaceForm() = padding(
-    all = SpaceSize.spaceForm
-)
-
-/**
- * Modifier size configuration size
- *
- * @since 0.0.7
- * @author Vitaliy Zarubin
- */
-fun Modifier.spaceFormSize() = size(
-    height = SpaceSize.spaceForm,
-    width = SpaceSize.spaceForm,
-)
-
-/**
- * Modifier padding fix size
- *
- * @since 0.0.7
- * @author Vitaliy Zarubin
- */
-fun Modifier.spaceThin() = padding(
-    all = SpaceSize.spaceThin
-)
-
-/**
- * Modifier size configuration size
- *
- * @since 0.0.7
- * @author Vitaliy Zarubin
- */
-fun Modifier.spaceThinSize() = size(
-    height = SpaceSize.spaceThin,
-    width = SpaceSize.spaceThin,
-)
-
-/**
- * Modifier padding fix size
- *
- * @since 0.0.7
- * @author Vitaliy Zarubin
- */
-fun Modifier.spaceSmall() = padding(
-    all = SpaceSize.spaceSmall
-)
-
-/**
- * Modifier size configuration size
- *
- * @since 0.0.7
- * @author Vitaliy Zarubin
- */
-fun Modifier.spaceSmallSize() = size(
-    height = SpaceSize.spaceSmall,
-    width = SpaceSize.spaceSmall,
-)
-
-/**
- * Modifier padding fix size
- *
- * @since 0.0.7
- * @author Vitaliy Zarubin
- */
-fun Modifier.spaceBase() = padding(
-    all = SpaceSize.spaceBase
-)
-
-/**
- * Modifier size configuration size
- *
- * @since 0.0.7
- * @author Vitaliy Zarubin
- */
-fun Modifier.spaceBaseSize() = size(
-    height = SpaceSize.spaceBase,
-    width = SpaceSize.spaceBase,
-)
-
-/**
- * Modifier padding fix size
- *
- * @since 0.0.7
- * @author Vitaliy Zarubin
- */
-fun Modifier.spaceMedium() = padding(
-    all = SpaceSize.spaceMedium
-)
-
-/**
- * Modifier size configuration size
- *
- * @since 0.0.7
- * @author Vitaliy Zarubin
- */
-fun Modifier.spaceMediumSize() = size(
-    height = SpaceSize.spaceMedium,
-    width = SpaceSize.spaceMedium,
-)
-
-/**
- * Modifier padding fix size
- *
- * @since 0.0.7
- * @author Vitaliy Zarubin
- */
-fun Modifier.spaceLarge() = padding(
-    all = SpaceSize.spaceLarge
-)
-
-/**
- * Modifier size configuration size
- *
- * @since 0.0.7
- * @author Vitaliy Zarubin
- */
-fun Modifier.spaceLargeSize() = size(
-    height = SpaceSize.spaceLarge,
-    width = SpaceSize.spaceLarge,
-)
+inline fun Modifier.ifTrue(value: Boolean, crossinline block: Modifier.() -> Modifier) =
+    then(if (value) block.invoke(this) else this)
