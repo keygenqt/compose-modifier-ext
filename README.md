@@ -1,10 +1,10 @@
 ## Compose Modifier Extension
 
-### ![picture](https://github.com/google/material-design-icons/raw/master/png/action/extension/materialicons/18dp/1x/baseline_extension_black_18dp.png?raw=true) [About](https://keygenqt.github.io/compose-modifier-ext/)
+General settings for the modifier and custom features
+
+### ![picture](https://github.com/google/material-design-icons/blob/master/png/action/view_day/materialicons/18dp/1x/baseline_view_day_black_18dp.png?raw=true) [More details](https://keygenqt.github.io/compose-modifier-ext/)
 
 ![picture](https://github.com/keygenqt/compose-modifier-ext/blob/master/data/just-image.png?raw=true)
-
-General settings for the modifier and custom features
 
 ## Connection
 
