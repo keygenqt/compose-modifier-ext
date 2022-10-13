@@ -18,18 +18,24 @@ package com.keygenqt.modifier
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
 
 /**
  * Collapse list item animation
@@ -98,3 +104,16 @@ inline fun Modifier.ifFalse(value: Boolean, crossinline block: Modifier.() -> Mo
  */
 inline fun Modifier.ifTrue(value: Boolean, crossinline block: Modifier.() -> Modifier) =
     then(if (value) block.invoke(this) else this)
+
+/**
+ * Remove excess indent Navigation Bars in ime padding
+ */
+fun Modifier.imePaddingWithOutNavigationBars(): Modifier = composed {
+    this.padding(
+        PaddingValues(
+            bottom = with(LocalDensity.current) {
+                WindowInsets.ime.getBottom(this).toDp() - 50.dp
+            }.coerceAtLeast(0.dp)
+        )
+    )
+}
